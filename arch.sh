@@ -60,10 +60,10 @@ install1() {
         cd "$cur"
         echo "[${time1}] Extraction done."
 
-        mkdir -p "$directory/etc"
-        printf "nameserver 8.8.8.8\nnameserver 1.1.1.1\n" > "$directory/etc/resolv.conf" || true
+        mkdir -p arch-fs/etc
+        printf "nameserver 8.8.8.8\nnameserver 1.1.1.1\n" > arch-fs/etc/resolv.conf || true
         
-        mkdir -p "$directory/tmp"
+        mkdir -p arch-fs/tmp
 
     fi
 

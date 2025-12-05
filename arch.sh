@@ -50,8 +50,12 @@ install1() {
         cd "$directory"
 
         proot --link2symlink tar -xpf "$cur/$ROOTFS_TARBALL" \
-          --exclude=etc/ca-certificates/extracted \
-          --exclude=etc/ssl/certs || :
+          --exclude='./etc/ca-certificates/extracted/*' \
+          --exclude='./etc/ca-certificates/extracted/**' \
+          --exclude='./etc/ssl/certs/*' \
+          --exclude='./etc/ssl/certs/**' \
+          || :
+
 
         cd "$cur"
         echo "[${time1}] Extraction done."

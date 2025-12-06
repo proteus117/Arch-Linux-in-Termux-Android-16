@@ -63,6 +63,8 @@ cd ~/arch-in-termux
 
 mkdir -p arch-binds
 
+Run:
+
 ```
 cat > arch-binds/shared-tmp.sh << 'EOF'
 if [ "$ARCH_X11" = "1" ] && [ -n "$TMPDIR" ]; then
@@ -71,6 +73,39 @@ fi
 EOF
 ```
 
+cat arch-binds/shared-tmp.sh    # verify file contents
 
+--------------------------------------------------------
 
+Log in to arch again:
 
+cd ~/arch-in-termux
+./startarch.sh
+
+Run commands:
+
+pacman -S --needed i3 xterm sudo    # I am using i3wm but you can install a DE like xfce4 later if you want
+
+useradd -m -s /bin/bash proteus117 # <----- Any username here
+
+passwd proteus117
+
+(enter new password)
+
+--------------------------------------------------------
+
+Add your new user to sudo:
+
+visudo
+
+Find the line: root ALL=(ALL:ALL) ALL
+
+Directly under it add a new line for your user:
+
+proteus117 ALL=(ALL:ALL) ALL
+
+Save and exit visudo
+
+---------------------------------------------------------
+
+tbc

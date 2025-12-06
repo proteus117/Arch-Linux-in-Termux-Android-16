@@ -231,12 +231,13 @@ In termux:
 
 In an i3 terminal export env variables and verify vulkan detects the gpu:
 
-```
-export DISPLAY=:0
-export XDG_RUNTIME_DIR=/tmp
-export VK_ICD_FILENAMES=/usr/share/vulkan/icd.d/freedreno_icd.aarch64.json
-export TU_DEBUG=noconform
-```
+`export DISPLAY=:0`
+
+`export XDG_RUNTIME_DIR=/tmp`
+
+`export VK_ICD_FILENAMES=/usr/share/vulkan/icd.d/freedreno_icd.aarch64.json`
+
+`export TU_DEBUG=noconform`
 
 
 `vulkaninfo | grep -E 'GPU|driver'`

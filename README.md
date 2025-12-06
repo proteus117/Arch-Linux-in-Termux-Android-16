@@ -11,11 +11,11 @@ First, disable the phantom process monitor. On Android version 16 this is very e
 
 In Termux:
 
-pkg update
+`pkg update`
 
-pkg upgrade
+`pkg upgrade`
 
-pkg install tar wget xz-utils pulseaudio proot termux-x11-nightly
+`pkg install tar wget xz-utils pulseaudio proot termux-x11-nightly`
 
 -----------------------------------------------------------------------------------------
 

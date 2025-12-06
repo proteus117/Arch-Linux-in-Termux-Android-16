@@ -23,45 +23,45 @@ Install recent Termux-x11 .apk on your device also https://github.com/termux/ter
 
 -----------------------------------------------------------------------------------------
 
-echo 'allow-external-apps = true' >> ~/.termux/termux.properties  # If you havent already
+`echo 'allow-external-apps = true' >> ~/.termux/termux.properties`  # If you havent already
 
-termux-setup-storage  # If you havent already
+`termux-setup-storage`  # If you havent already
 
 ---------------------------------------------
 
-mkdir -p ~/arch-in-termux
+`mkdir -p ~/arch-in-termux`
 
-cd ~/arch-in-termux
+`cd ~/arch-in-termux`
 
-curl -o arch.sh "https://raw.githubusercontent.com/proteus117/Arch-Linux-in-Termux-Android-16/refs/heads/main/arch.sh"
+`curl -o arch.sh "https://raw.githubusercontent.com/proteus117/Arch-Linux-in-Termux-Android-16/refs/heads/main/arch.sh"`
 
-Run './arch.sh -y' in this directory (~/arch-in-termux). A generic AArch64 rootfs tarball is installed.
+Run `./arch.sh -y` in this directory (~/arch-in-termux). A generic AArch64 rootfs tarball is installed.
 
 --------------------------------------------------------------------------------------------------------
 
-Run './startarch.sh' to enter the new system
+Run `./startarch.sh` to enter the new system
 
 From the root shell you just entered: 
 
-pacman-key --init
+`pacman-key --init`
 
-pacman-key --populate archlinuxarm
+`pacman-key --populate archlinuxarm`
 
-nano /etc/pacman.conf # open pacman.conf in nano
+`nano /etc/pacman.conf` # open pacman.conf in nano
 
 Find #DisableSandbox and uncomment it, save and close the file
 
-pacman -Syu
+`pacman -Syu`
 
-pacman -S ca-certificates ca-certificates-utils
+`pacman -S ca-certificates ca-certificates-utils`
 
 --------------------------------------------------
 
 Back in Termux (not logged into arch):
 
-cd ~/arch-in-termux
+`cd ~/arch-in-termux`
 
-mkdir -p arch-binds
+`mkdir -p arch-binds`
 
 Run:
 
@@ -73,23 +73,23 @@ fi
 EOF
 ```
 
-cat arch-binds/shared-tmp.sh    # verify file contents
+`cat arch-binds/shared-tmp.sh`    # verify file contents
 
 --------------------------------------------------------
 
 Log in to arch again:
 
-cd ~/arch-in-termux
+`cd ~/arch-in-termux`
 
-./startarch.sh
+`./startarch.sh`
 
 Run commands:
 
-pacman -S --needed i3 xterm wget unzip sudo    # I am using i3wm but you can install a DE like xfce4 later if you want
+`pacman -S --needed i3 xterm wget unzip sudo`    # I am using i3wm but you can install a DE like xfce4 later if you want
 
-useradd -m -s /bin/bash proteus117 # <----- Any username here
+`useradd -m -s /bin/bash proteus117` # <----- Any username here
 
-passwd proteus117
+`passwd proteus117`
 
 (enter new password)
 
@@ -97,13 +97,13 @@ passwd proteus117
 
 Add your new user to sudo:
 
-visudo
+`visudo`
 
 Find the line: root ALL=(ALL:ALL) ALL
 
 Directly under it add a new line for your user:
 
-proteus117 ALL=(ALL:ALL) ALL
+`proteus117 ALL=(ALL:ALL) ALL`
 
 Save and exit visudo
 
@@ -111,7 +111,7 @@ Save and exit visudo
 
 Still in arch as arch root user:
 
-mkdir /home/proteus117 # user you created
+`mkdir /home/proteus117` # user you created
 
 
 ```
@@ -124,7 +124,7 @@ EOF
 ```
 
 
-chmod +x /usr/local/bin/starti3-x11
+`chmod +x /usr/local/bin/starti3-x11`
 
 log out from arch and return to termux
 
@@ -132,7 +132,7 @@ log out from arch and return to termux
 
 Back in termux:
 
-cd
+`cd`
 
 
 ```
@@ -165,11 +165,11 @@ EOF
 
 Replace the username in the script with the one you created, or edit the config afterwards.
 
-cat ~/xstart-arch-i3 # to verify the file contents
+`cat ~/xstart-arch-i3` # to verify the file contents
 
 -------------------------------------------------------------------------------------------------------------
 
-./xstart-arch-i3
+`./xstart-arch-i3`
 
 Switch to the termux-x11 app, you should see i3 window manager.
 
@@ -179,17 +179,17 @@ Press "modifier + enter" to open a new terminal in i3.
 
 In i3:
 
-cd ~
+`cd ~`
 
-mkdir -p kgsl
+`mkdir -p kgsl`
 
-cd kgsl
+`cd kgsl`
 
-wget https://github.com/MatrixhKa/mesa-turnip/releases/download/24.1.0/mesa-turnip-kgsl-24.1.0-devel.zip
+`wget https://github.com/MatrixhKa/mesa-turnip/releases/download/24.1.0/mesa-turnip-kgsl-24.1.0-devel.zip`
 
-unzip mesa-turnip-kgsl-24.1.0-devel.zip -d turnip
+`unzip mesa-turnip-kgsl-24.1.0-devel.zip -d turnip`
 
-cd turnip
+`cd turnip`
 
 ls to verify the contents. You should see files like freedreno_icd.aarch64.json, libvulkan_freedreno.so
 
@@ -199,23 +199,23 @@ Exit i3, logout of arch to termux. Log back in again without x11, so that you ar
 
 In Termux:
 
-cd ~/arch-in-termux
+`cd ~/arch-in-termux`
 
-./startarch.sh
+`./startarch.sh`
 
 As the arch root user now run the commands:
 
-pacman -S vulkan-tools xfce4-terminal(optional)
+`pacman -S vulkan-tools xfce4-terminal(optional)`
 
-cp /home/proteus117/kgsl/turnip/libvulkan_freedreno.so /usr/lib/
+`cp /home/proteus117/kgsl/turnip/libvulkan_freedreno.so /usr/lib/`
 
-cp /home/proteus117/kgsl/turnip/freedreno_icd.aarch64.json /usr/share/vulkan/icd.d/
+`cp /home/proteus117/kgsl/turnip/freedreno_icd.aarch64.json /usr/share/vulkan/icd.d/`
 
-chown root:root /usr/lib/libvulkan_freedreno.so /usr/share/vulkan/icd.d/freedreno_icd.aarch64.json
+`chown root:root /usr/lib/libvulkan_freedreno.so /usr/share/vulkan/icd.d/freedreno_icd.aarch64.json`
 
-chmod 755 /usr/lib/libvulkan_freedreno.so
+`chmod 755 /usr/lib/libvulkan_freedreno.so`
 
-chmod 644 /usr/share/vulkan/icd.d/freedreno_icd.aarch64.json
+`chmod 644 /usr/share/vulkan/icd.d/freedreno_icd.aarch64.json`
 
 exit arch root user back to termux
 
@@ -223,9 +223,9 @@ exit arch root user back to termux
 
 In termux:
 
-cd
+`cd`
 
-./xstart-arch-i3
+`./xstart-arch-i3`
 
 ----------------------------------------------------------------------------------------------------------------
 
@@ -239,6 +239,6 @@ export TU_DEBUG=noconform
 ```
 
 
-vulkaninfo | grep -E 'GPU|driver'
+`vulkaninfo | grep -E 'GPU|driver'`
 
 You should see something like "GPU id : 0 (Turnip Adreno (TM) 750)" as well other info about the gpu and drivers

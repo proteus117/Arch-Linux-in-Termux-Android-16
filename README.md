@@ -63,11 +63,14 @@ cd ~/arch-in-termux
 
 mkdir -p arch-binds
 
-```cat > arch-binds/shared-tmp.sh << 'EOF'
+```
+cat > arch-binds/shared-tmp.sh << 'EOF'
 if [ "$ARCH_X11" = "1" ] && [ -n "$TMPDIR" ]; then
   command+=" -b ${TMPDIR}:/tmp"
 fi
-EOF```
+EOF
+```
+
 
 
 

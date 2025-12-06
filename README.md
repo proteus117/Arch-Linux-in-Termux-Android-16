@@ -4,6 +4,7 @@ Arch Linux in Termux with hardware acceleration, Android 16, no root, no proot-d
 
 This was done on Android 16 on a stock Snapdragon 8 Gen 3 device without root access.
 
+Video Demo: https://youtu.be/vMYQ9kzvvnc
 
 First, disable the phantom process monitor. On Android version 16 this is very easy. Go to Settings -> System -> Developer Options -> Disable Child Process Restrictions.
 

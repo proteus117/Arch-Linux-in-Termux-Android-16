@@ -85,7 +85,7 @@ cd ~/arch-in-termux
 
 Run commands:
 
-pacman -S --needed i3 xterm sudo    # I am using i3wm but you can install a DE like xfce4 later if you want
+pacman -S --needed i3 xterm wget unzip sudo    # I am using i3wm but you can install a DE like xfce4 later if you want
 
 useradd -m -s /bin/bash proteus117 # <----- Any username here
 
@@ -113,6 +113,7 @@ Still in arch as arch root user:
 
 mkdir /home/proteus117 # user you created
 
+
 ```
 cat > /usr/local/bin/starti3-x11 << 'EOF'
 #!/bin/bash
@@ -121,6 +122,7 @@ export PULSE_SERVER=127.0.0.1
 exec i3
 EOF
 ```
+
 
 chmod +x /usr/local/bin/starti3-x11
 
@@ -131,6 +133,7 @@ log out from arch and return to termux
 Back in termux:
 
 cd
+
 
 ```
 cat > xstart-arch-i3 << 'EOF'
@@ -164,13 +167,78 @@ Replace the username in the script with the one you created, or edit the config 
 
 cat ~/xstart-arch-i3 # to verify the file contents
 
+-------------------------------------------------------------------------------------------------------------
+
 ./xstart-arch-i3
 
 Switch to the termux-x11 app, you should see i3 window manager.
 
-Press "enter" : "Yes, Generate the config", also choose your preferred modifier key and then press "enter" again
+Press "enter" : "Yes, Generate the config", also choose your preferred modifier key and then press "enter" again.
 
-Press "modifier + enter" to open a new terminal in i3
+Press "modifier + enter" to open a new terminal in i3.
 
 In i3:
 
+cd ~
+
+mkdir -p kgsl
+
+cd kgsl
+
+wget https://github.com/MatrixhKa/mesa-turnip/releases/download/24.1.0/mesa-turnip-kgsl-24.1.0-devel.zip
+
+unzip mesa-turnip-kgsl-24.1.0-devel.zip -d turnip
+
+cd turnip
+
+ls to verify the contents. You should see files like freedreno_icd.aarch64.json, libvulkan_freedreno.so
+
+Exit i3, logout of arch to termux. Log back in again without x11, so that you are the arch root user again:
+
+---------------------------------------------------------------------------------------------------------------
+
+In Termux:
+
+cd ~/arch-in-termux
+
+./startarch.sh
+
+As the arch root user now run the commands:
+
+pacman -S vulkan-tools xfce4-terminal(optional)
+
+cp /home/proteus117/kgsl/turnip/libvulkan_freedreno.so /usr/lib/
+
+cp /home/proteus117/kgsl/turnip/freedreno_icd.aarch64.json /usr/share/vulkan/icd.d/
+
+chown root:root /usr/lib/libvulkan_freedreno.so /usr/share/vulkan/icd.d/freedreno_icd.aarch64.json
+
+chmod 755 /usr/lib/libvulkan_freedreno.so
+
+chmod 644 /usr/share/vulkan/icd.d/freedreno_icd.aarch64.json
+
+exit arch root user back to termux
+
+---------------------------------------------------------------------------------------------------------------
+
+In termux:
+
+cd
+
+./xstart-arch-i3
+
+----------------------------------------------------------------------------------------------------------------
+
+In an i3 terminal export env variables and verify vulkan detects the gpu:
+
+```
+export DISPLAY=:0
+export XDG_RUNTIME_DIR=/tmp
+export VK_ICD_FILENAMES=/usr/share/vulkan/icd.d/freedreno_icd.aarch64.json
+export TU_DEBUG=noconform
+```
+
+
+vulkaninfo | grep -E 'GPU|driver'
+
+You should see something like "GPU id : 0 (Turnip Adreno (TM) 750)" as well other info about the gpu and drivers

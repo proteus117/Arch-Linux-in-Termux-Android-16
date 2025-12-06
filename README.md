@@ -263,11 +263,15 @@ sudo pacman -S --needed \
 ```
 
 Test ENV:
+
 `export DISPLAY=:0`
+
 `export XDG_RUNTIME_DIR=/tmp`
+
 `export PULSE_SERVER=127.0.0.1`
 
 Test ./codium with flags to stop crashing
+
 `./codium --no-sandbox --disable-setuid-sandbox`
 
 Enjoy

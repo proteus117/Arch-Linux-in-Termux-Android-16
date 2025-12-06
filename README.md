@@ -242,3 +242,32 @@ export TU_DEBUG=noconform
 `vulkaninfo | grep -E 'GPU|driver'`
 
 You should see something like "GPU id : 0 (Turnip Adreno (TM) 750)" as well other info about the gpu and drivers
+
+------------------------------------------------------------------------------------------------------------------
+
+Optional: Install VSCodium
+
+`cd ~`
+
+`mkdir -p apps/vscodium`
+
+`wget https://github.com/VSCodium/vscodium/releases/download/1.106.37943/VSCodium-linux-arm64-1.106.37943.tar.gz` Change URL for different version
+
+`tar xf VSCodium-linux-arm64-1.106.37943.tar.gz --strip-components=1`
+
+Dependencies:
+```
+sudo pacman -S --needed \
+  gtk3 nss alsa-lib libxkbfile libxss libsecret libnotify \
+  libx11 libxrandr libxi libxcomposite libxcb
+```
+
+Test ENV:
+`export DISPLAY=:0`
+`export XDG_RUNTIME_DIR=/tmp`
+`export PULSE_SERVER=127.0.0.1`
+
+Test ./codium with flags to stop crashing
+`./codium --no-sandbox --disable-setuid-sandbox`
+
+Enjoy

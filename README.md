@@ -19,6 +19,10 @@ pkg install tar wget xz-utils pulseaudio proot termux-x11-nightly
 
 -----------------------------------------------------------------------------------------
 
+Install recent Termux-x11 .apk on your device also https://github.com/termux/termux-x11
+
+-----------------------------------------------------------------------------------------
+
 echo 'allow-external-apps = true' >> ~/.termux/termux.properties  # If you havent already
 
 termux-setup-storage  # If you havent already
@@ -52,5 +56,18 @@ pacman -Syu
 pacman -S ca-certificates ca-certificates-utils
 
 --------------------------------------------------
+
+Back in Termux (not logged into arch):
+
+cd ~/arch-in-termux
+
+mkdir -p arch-binds
+
+```cat > arch-binds/shared-tmp.sh << 'EOF'
+if [ "$ARCH_X11" = "1" ] && [ -n "$TMPDIR" ]; then
+  command+=" -b ${TMPDIR}:/tmp"
+fi
+EOF```
+
 
 
